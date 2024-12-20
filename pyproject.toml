@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "aws-test"
+version = "0.1.0"
+description = ""
+authors = ["plat01 <fplatoff@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+fastapi = "^0.115.6"
+sqlalchemy = "^2.0.36"
+python-dotenv = "^1.0.1"
+uvicorn = "^0.34.0"
+pydantic-settings = "^2.7.0"
+asyncpg = "^0.30.0"
+python-multipart = "^0.0.20"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
