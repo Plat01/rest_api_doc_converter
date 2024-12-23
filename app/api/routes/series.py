@@ -1,5 +1,4 @@
 from fastapi import APIRouter, Depends, UploadFile, File
-from typing import List
 from app.services.series_service import SeriesService
 from app.domain.series.entities import SeriesCreate, Series
 from app.domain.documents.entities import Document
@@ -14,7 +13,7 @@ async def create_series(
 ):
     return await service.create_series(series)
 
-@router.get("/series", response_model=List[Series])
+@router.get("/series", response_model=list[Series])
 async def get_series(
     service: SeriesService = Depends(get_series_service)
 ):
@@ -28,7 +27,7 @@ async def upload_document(
 ):
     return await service.upload_document(id, file)
 
-@router.get("/series/{id}/documents", response_model=List[Document])
+@router.get("/series/{id}/documents", response_model=list[Document | None])
 async def get_documents(
     id: str,
     service: SeriesService = Depends(get_series_service)

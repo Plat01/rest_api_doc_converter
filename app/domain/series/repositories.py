@@ -17,6 +17,6 @@ class SeriesRepository(ABC):
         pass
 
     @abstractmethod
-    async def get_series_documents(self, series_id: str) -> list[Document]:
+    async def get_series_documents(self, series_id: str) -> list[Document | None]:
         pass
     
