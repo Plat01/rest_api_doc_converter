@@ -3,7 +3,6 @@ FROM python:3.12-slim
 WORKDIR /app
 
 RUN apt update && apt install -y
-RUN apt install -y bash
 
 RUN pip install poetry
 

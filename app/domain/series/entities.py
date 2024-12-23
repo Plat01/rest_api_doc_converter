@@ -1,3 +1,4 @@
+from dataclasses import Field
 from pydantic import BaseModel, constr
 from datetime import datetime
 from app.domain.documents.entities import Document
@@ -9,5 +10,5 @@ class Series(BaseModel):
     id: str
     name: str
     created_at: datetime
-    documents: list[Document] = [] 
+    documents: list[Document] = Field(default_factory=list)
     
