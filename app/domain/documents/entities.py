@@ -15,4 +15,5 @@ class Document(BaseModel):
     original_filename: str
     status: DocumentStatus
     created_at: datetime
-    converted_at: Optional[datetime] = None 
+    converted_at: Optional[datetime] = None
+    file_url: Optional[str] = None 
