@@ -2,11 +2,11 @@ from fastapi import UploadFile
 from app.domain.series.repositories import SeriesRepository
 from app.domain.series.entities import Series, SeriesCreate
 from app.domain.documents.entities import Document
-from app.services.s3_service import S3Service
+from app.services.aws_service import AWSClient
 from app.core.config import settings
 
 class SeriesService:
-    def __init__(self, repository: SeriesRepository, s3_service: S3Service):
+    def __init__(self, repository: SeriesRepository, s3_service: AWSClient):
         self.repository = repository
         self.s3_service = s3_service
 
@@ -36,6 +36,14 @@ class SeriesService:
 
         document = await self.repository.upload_document(id, file)
         document.file_url = file_url
+
+        message_body = {
+            "document_id": document.id,
+            "series_id": document.series_id,
+            "file_url": document.file_url
+        }
+        self.s3_service.send_sqs_message(message_body, settings.SQS_QUEUE_URL)
+
         return document
 
     async def get_series_documents(self, id: str) -> list[Document | None]:

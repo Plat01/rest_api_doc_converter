@@ -6,6 +6,7 @@ class Settings(BaseSettings):
     AWS_SECRET_ACCESS_KEY: str
     AWS_REGION: str
     S3_BUCKET: str
+    SQS_QUEUE_URL: str
 
     POSTGRES_USER: str = 'postgres'
     POSTGRES_PASSWORD: str = '0000'

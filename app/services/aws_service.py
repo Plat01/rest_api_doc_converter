@@ -3,10 +3,16 @@ from botocore.exceptions import NoCredentialsError
 from fastapi import UploadFile
 from app.core.config import settings
 
-class S3Service:
+class AWSClient:
     def __init__(self):
         self.s3_client = boto3.client(
             's3',
+            aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
+            aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,
+            region_name=settings.AWS_REGION
+        )
+        self.sqs_client = boto3.client(
+            'sqs',
             aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
             aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,
             region_name=settings.AWS_REGION
@@ -27,5 +33,14 @@ class S3Service:
             self.s3_client.upload_fileobj(file.file, bucket_name, object_name)
             file_url = f"https://{bucket_name}.s3.{settings.AWS_REGION}.amazonaws.com/{object_name}"
             return file_url
+        except NoCredentialsError:
+            raise Exception("Credentials not available") 
+
+    def send_sqs_message(self, message_body: dict, queue_url: str) -> None:
+        try:
+            self.sqs_client.send_message(
+                QueueUrl=queue_url,
+                MessageBody=str(message_body)
+            )
         except NoCredentialsError:
             raise Exception("Credentials not available") 

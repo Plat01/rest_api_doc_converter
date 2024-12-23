@@ -16,4 +16,4 @@ class Document(BaseModel):
     status: DocumentStatus
     created_at: datetime
     converted_at: Optional[datetime] = None
-    file_url: Optional[str] = None 
+    file_url: Optional[str] = None  # TODO: add to table 
