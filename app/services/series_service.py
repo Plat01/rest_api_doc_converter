@@ -16,5 +16,5 @@ class SeriesService:
     async def upload_document(self, id: str, file: UploadFile) -> Document:
         return await self.repository.upload_document(id, file)
 
-    async def get_series_documents(self, id: str) -> list[Document]:
+    async def get_series_documents(self, id: str) -> list[Document | None]:
         return await self.repository.get_series_documents(id)
